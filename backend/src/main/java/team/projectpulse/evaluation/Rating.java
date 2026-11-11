@@ -17,6 +17,7 @@ public class Rating {
 
 
     public Rating() {
+        // Required by JPA to instantiate the entity before populating persistent state.
     }
 
     public Rating(Criterion criterion, Double actualScore) {

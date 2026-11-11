@@ -32,8 +32,6 @@ public class UseCaseLock {
     private Integer version;
 
 
-    public UseCaseLock() {
-    }
 
     public boolean isLocked(Instant now) {
         if (lockedAt == null) return false;

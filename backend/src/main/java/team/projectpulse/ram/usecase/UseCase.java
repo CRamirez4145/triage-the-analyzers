@@ -74,8 +74,6 @@ public class UseCase {
     private Integer version;
 
 
-    public UseCase() {
-    }
 
     /* ---------- Convenience helpers ---------- */
     public void addMainStep(UseCaseMainStep step) {

@@ -26,6 +26,7 @@ public class Team {
 
 
     public Team() {
+        // Required by JPA to instantiate the entity before populating persistent state.
     }
 
     public Team(String teamName, String description, String teamWebsiteUrl) {

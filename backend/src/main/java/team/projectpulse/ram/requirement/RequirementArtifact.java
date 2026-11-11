@@ -79,7 +79,7 @@ public class RequirementArtifact {
 
 
     public RequirementArtifact() {
-
+        // Required by JPA to instantiate the entity before populating persistent state.
     }
 
     public RequirementArtifact(Team team, RequirementArtifactType type, String title, String content, String notes) {

@@ -52,6 +52,7 @@ public class Section {
 
 
     public Section() {
+        // Required by JPA to instantiate the entity before populating persistent state.
     }
 
     public Section(String sectionName,

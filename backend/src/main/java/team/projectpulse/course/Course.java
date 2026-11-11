@@ -34,6 +34,7 @@ public class Course {
     private List<Rubric> rubrics = new ArrayList<>();
 
     public Course() {
+        // Required by JPA to instantiate the entity before populating persistent state.
     }
 
     public Course(String courseName, String courseDescription) {

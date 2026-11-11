@@ -28,6 +28,7 @@ public class ArtifactKeySequence {
 
 
     public ArtifactKeySequence() {
+        // Required by JPA to instantiate the entity before populating persistent state.
     }
 
     public ArtifactKeySequence(Team team, RequirementArtifactType type) {

@@ -16,6 +16,7 @@ public class Result {
 
 
     public Result() {
+        // Retained for compatibility with no-argument bean construction and setter population.
     }
 
     public Result(boolean flag, Integer code, String message) {
