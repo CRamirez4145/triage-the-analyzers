@@ -10,6 +10,7 @@ import team.projectpulse.team.Team;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -132,7 +133,7 @@ public class RequirementDocument {
     }
 
     public void setSections(List<DocumentSection> sections) {
-        this.sections = sections;
+        this.sections = sections == null ? null : new ArrayList<>(sections);
     }
 
     public DocumentStatus getStatus() {
@@ -148,7 +149,7 @@ public class RequirementDocument {
     }
 
     public void setCommentThreads(Set<CommentThread> commentThreads) {
-        this.commentThreads = commentThreads;
+        this.commentThreads = commentThreads == null ? null : new LinkedHashSet<>(commentThreads);
     }
 
     public Integer getVersion() {

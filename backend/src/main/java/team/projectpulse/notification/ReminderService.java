@@ -118,6 +118,19 @@ public class ReminderService {
      * @param failed the students it did not, in the order they were tried
      */
     public record ReminderResult(int sent, List<Student> failed) {
+        // Snapshot membership without cloning students or changing failure order.
+        public ReminderResult {
+            failed = failed == null ? null : new ArrayList<>(failed);
+        }
+
+        @Override
+        public List<Student> failed() {
+            List<Student> result = failed;
+            if (result != null) {
+                result = new ArrayList<>(result);
+            }
+            return result;
+        }
     }
 
 }

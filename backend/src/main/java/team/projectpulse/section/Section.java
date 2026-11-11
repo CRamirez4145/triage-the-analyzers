@@ -105,11 +105,15 @@ public class Section {
     }
 
     public List<String> getActiveWeeks() {
-        return activeWeeks;
+        List<String> result = activeWeeks;
+        if (result != null) {
+            result = new ArrayList<>(result);
+        }
+        return result;
     }
 
     public void setActiveWeeks(List<String> activeWeeks) {
-        this.activeWeeks = activeWeeks;
+        this.activeWeeks = activeWeeks == null ? null : new ArrayList<>(activeWeeks);
     }
 
     public Rubric getRubric() {

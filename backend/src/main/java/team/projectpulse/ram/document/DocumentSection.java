@@ -12,6 +12,7 @@ import team.projectpulse.user.PeerEvaluationUser;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -171,7 +172,7 @@ public class DocumentSection {
     }
 
     public void setRequirementArtifacts(List<RequirementArtifact> requirementArtifacts) {
-        this.requirementArtifacts = requirementArtifacts;
+        this.requirementArtifacts = requirementArtifacts == null ? null : new ArrayList<>(requirementArtifacts);
     }
 
     public String getGuidance() {
@@ -187,7 +188,7 @@ public class DocumentSection {
     }
 
     public void setCommentThreads(Set<CommentThread> commentThreads) {
-        this.commentThreads = commentThreads;
+        this.commentThreads = commentThreads == null ? null : new LinkedHashSet<>(commentThreads);
     }
 
     public DocumentSectionLock getLock() {

@@ -7,6 +7,7 @@ import team.projectpulse.section.Section;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -102,7 +103,7 @@ public class Course {
     }
 
     public List<Criterion> getCriteria() {
-        return criteria;
+        return Collections.unmodifiableList(criteria);
     }
 
     public void addCriterion(Criterion criterion) {

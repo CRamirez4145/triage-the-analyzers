@@ -5,6 +5,7 @@ import team.projectpulse.notification.SubmittableItem;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,4 +25,18 @@ public record SubmissionStatusDto(SubmittableItem item,
                                   @JsonFormat(pattern = "HH:mm")
                                   LocalTime dueTime,
                                   List<OwingTeamDto> teams) {
+
+    // Own collection membership while preserving nulls, encounter order, and element identity.
+    public SubmissionStatusDto {
+        teams = teams == null ? null : new ArrayList<>(teams);
+    }
+
+    @Override
+    public List<OwingTeamDto> teams() {
+        List<OwingTeamDto> result = teams;
+        if (result != null) {
+            result = new ArrayList<>(result);
+        }
+        return result;
+    }
 }

@@ -5,6 +5,7 @@ import team.projectpulse.ram.requirement.RequirementArtifact;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -181,7 +182,7 @@ public class UseCase {
     }
 
     public void setSecondaryActors(Set<RequirementArtifact> secondaryActors) {
-        this.secondaryActors = secondaryActors;
+        this.secondaryActors = secondaryActors == null ? null : new LinkedHashSet<>(secondaryActors);
     }
 
     public String getUseCaseTrigger() {
@@ -197,7 +198,7 @@ public class UseCase {
     }
 
     public void setPreconditions(Set<RequirementArtifact> preconditions) {
-        this.preconditions = preconditions;
+        this.preconditions = preconditions == null ? null : new LinkedHashSet<>(preconditions);
     }
 
     public Set<RequirementArtifact> getPostconditions() {
@@ -205,7 +206,7 @@ public class UseCase {
     }
 
     public void setPostconditions(Set<RequirementArtifact> postconditions) {
-        this.postconditions = postconditions;
+        this.postconditions = postconditions == null ? null : new LinkedHashSet<>(postconditions);
     }
 
     public List<UseCaseMainStep> getMainSteps() {
@@ -213,7 +214,7 @@ public class UseCase {
     }
 
     public void setMainSteps(List<UseCaseMainStep> mainSteps) {
-        this.mainSteps = mainSteps;
+        this.mainSteps = mainSteps == null ? null : new ArrayList<>(mainSteps);
     }
 
     public Integer getVersion() {

@@ -13,6 +13,7 @@ import team.projectpulse.user.PeerEvaluationUser;
 
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -200,7 +201,7 @@ public class RequirementArtifact {
     }
 
     public void setOutgoingArtifactLinks(Set<ArtifactLink> outgoingArtifactLinks) {
-        this.outgoingArtifactLinks = outgoingArtifactLinks;
+        this.outgoingArtifactLinks = outgoingArtifactLinks == null ? null : new LinkedHashSet<>(outgoingArtifactLinks);
     }
 
     public Set<ArtifactLink> getIncomingArtifactLinks() {
@@ -208,7 +209,7 @@ public class RequirementArtifact {
     }
 
     public void setIncomingArtifactLinks(Set<ArtifactLink> incomingArtifactLinks) {
-        this.incomingArtifactLinks = incomingArtifactLinks;
+        this.incomingArtifactLinks = incomingArtifactLinks == null ? null : new LinkedHashSet<>(incomingArtifactLinks);
     }
 
     public Set<CommentThread> getCommentThreads() {
@@ -216,7 +217,7 @@ public class RequirementArtifact {
     }
 
     public void setCommentThreads(Set<CommentThread> commentThreads) {
-        this.commentThreads = commentThreads;
+        this.commentThreads = commentThreads == null ? null : new LinkedHashSet<>(commentThreads);
     }
 
     public PeerEvaluationUser getCreatedBy() {

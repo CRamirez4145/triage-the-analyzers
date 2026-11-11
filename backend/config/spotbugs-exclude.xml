@@ -7,4 +7,462 @@
 
      Unlike the baseline, this file may grow, but every entry is a reviewed decision. -->
 <FindBugsFilter>
+    <!-- D1: Single-valued JPA associations intentionally share mutable entity references to
+         preserve entity identity and support relationship management. Accept this design risk
+         for @ManyToOne and @OneToOne only; collection associations and other references remain
+         subject to EI_EXPOSE_REP and EI_EXPOSE_REP2. -->
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+        <Or>
+            <Annotation name="jakarta.persistence.ManyToOne"/>
+            <Annotation name="jakarta.persistence.OneToOne"/>
+        </Or>
+    </Match>
+
+    <!-- D1: Constructor injection intentionally retains Spring-managed dependencies so
+         collaborators keep their container-managed identity, configuration, and proxy behavior.
+         Each match is limited to a reviewed class, exact constructor signature, and dependency
+         field; other constructor arguments and all getters remain subject to analysis. -->
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.activity.ActivityController"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.activity.ActivityService,team.projectpulse.activity.converter.ActivityToActivityDtoConverter,team.projectpulse.activity.converter.ActivityDtoToActivityConverter"
+                returns="void"/>
+        <Field name="activityService" type="team.projectpulse.activity.ActivityService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.course.CourseController"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.course.CourseService,team.projectpulse.course.converter.CourseDtoToCourseConverter,team.projectpulse.course.converter.CourseToCourseDtoConverter"
+                returns="void"/>
+        <Field name="courseService" type="team.projectpulse.course.CourseService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.evaluation.EvaluationController"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.evaluation.EvaluationService,team.projectpulse.evaluation.converter.PeerEvaluationToPeerEvaluationDtoConverter,team.projectpulse.evaluation.converter.PeerEvaluationDtoToPeerEvaluationConverter"
+                returns="void"/>
+        <Field name="evaluationService" type="team.projectpulse.evaluation.EvaluationService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.instructor.InstructorController"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.instructor.InstructorService,team.projectpulse.instructor.converter.InstructorRegistrationRequestToInstructorConverter,team.projectpulse.instructor.converter.InstructorToInstructorDtoConverter,team.projectpulse.instructor.converter.InstructorDtoToInstructorConverter"
+                returns="void"/>
+        <Field name="instructorService" type="team.projectpulse.instructor.InstructorService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.instructor.InstructorService"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.instructor.InstructorRepository,team.projectpulse.user.userinvitation.UserInvitationService,org.springframework.security.crypto.password.PasswordEncoder,team.projectpulse.section.SectionRepository,team.projectpulse.course.CourseRepository,team.projectpulse.system.UserUtils"
+                returns="void"/>
+        <Field name="userInvitationService" type="team.projectpulse.user.userinvitation.UserInvitationService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.notification.ReminderController"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.notification.SubmissionStatusService,team.projectpulse.notification.ReminderService,team.projectpulse.section.SectionService,team.projectpulse.notification.converter.StudentToOwingStudentDtoConverter,java.time.Clock"
+                returns="void"/>
+        <Field name="sectionService" type="team.projectpulse.section.SectionService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.notification.SubmissionStatusService"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.student.StudentRepository,team.projectpulse.activity.ActivityService,team.projectpulse.evaluation.EvaluationService"
+                returns="void"/>
+        <Field name="activityService" type="team.projectpulse.activity.ActivityService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.notification.SubmissionStatusService"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.student.StudentRepository,team.projectpulse.activity.ActivityService,team.projectpulse.evaluation.EvaluationService"
+                returns="void"/>
+        <Field name="evaluationService" type="team.projectpulse.evaluation.EvaluationService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.notification.WeeklyReminderScheduler"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.section.SectionService,team.projectpulse.notification.SubmissionStatusService,team.projectpulse.notification.ReminderService,java.time.Clock,boolean"
+                returns="void"/>
+        <Field name="sectionService" type="team.projectpulse.section.SectionService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.ram.collaboration.CommentController"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.ram.collaboration.CommentService,team.projectpulse.ram.collaboration.converter.CommentThreadToCommentThreadDtoConverter,team.projectpulse.ram.collaboration.converter.CommentThreadDtoToCommentThreadConverter,team.projectpulse.ram.collaboration.converter.CommentToCommentDtoConverter"
+                returns="void"/>
+        <Field name="commentService" type="team.projectpulse.ram.collaboration.CommentService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.ram.document.DocumentSectionService"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.ram.document.DocumentSectionRepository,team.projectpulse.ram.requirement.RequirementArtifactService,team.projectpulse.system.UserUtils,team.projectpulse.user.UserRepository,java.time.Duration"
+                returns="void"/>
+        <Field name="requirementArtifactService" type="team.projectpulse.ram.requirement.RequirementArtifactService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.ram.glossary.GlossaryService"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.ram.requirement.RequirementArtifactRepository,team.projectpulse.ram.requirement.RequirementArtifactService"
+                returns="void"/>
+        <Field name="requirementArtifactService" type="team.projectpulse.ram.requirement.RequirementArtifactService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.ram.requirement.ArtifactLinkController"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.ram.requirement.ArtifactLinkService,team.projectpulse.ram.requirement.converter.ArtifactLinkToArtifactLinkDtoConverter,team.projectpulse.ram.requirement.converter.ArtifactLinkToUpstreamLinkViewDtoConverter,team.projectpulse.ram.requirement.converter.ArtifactLinkToDownstreamLinkViewDtoConverter"
+                returns="void"/>
+        <Field name="artifactLinkService" type="team.projectpulse.ram.requirement.ArtifactLinkService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.ram.requirement.RequirementArtifactController"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.ram.requirement.RequirementArtifactService,team.projectpulse.ram.requirement.converter.RequirementArtifactToRequirementArtifactDtoConverter,team.projectpulse.ram.requirement.converter.RequirementArtifactDtoToRequirementArtifactConverter"
+                returns="void"/>
+        <Field name="requirementArtifactService" type="team.projectpulse.ram.requirement.RequirementArtifactService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.ram.usecase.UseCaseService"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.ram.usecase.UseCaseRepository,team.projectpulse.ram.requirement.RequirementArtifactService,team.projectpulse.system.UserUtils,team.projectpulse.user.UserRepository,java.time.Duration"
+                returns="void"/>
+        <Field name="requirementArtifactService" type="team.projectpulse.ram.requirement.RequirementArtifactService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.rubric.CriterionController"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.rubric.CriterionService,team.projectpulse.rubric.converter.CriterionToCriterionDtoConverter,team.projectpulse.rubric.converter.CriterionDtoToCriterionConverter"
+                returns="void"/>
+        <Field name="criterionService" type="team.projectpulse.rubric.CriterionService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.rubric.RubricController"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.rubric.RubricService,team.projectpulse.rubric.converter.RubricToRubricDtoConverter,team.projectpulse.rubric.converter.RubricDtoToRubricConverter"
+                returns="void"/>
+        <Field name="rubricService" type="team.projectpulse.rubric.RubricService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.section.SectionController"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.section.SectionService,team.projectpulse.section.converter.SectionToSectionDtoConverter,team.projectpulse.section.converter.SectionDtoToSectionConverter,team.projectpulse.user.userinvitation.UserInvitationService,team.projectpulse.instructor.converter.InstructorToInstructorDtoConverter"
+                returns="void"/>
+        <Field name="sectionService" type="team.projectpulse.section.SectionService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.section.SectionController"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.section.SectionService,team.projectpulse.section.converter.SectionToSectionDtoConverter,team.projectpulse.section.converter.SectionDtoToSectionConverter,team.projectpulse.user.userinvitation.UserInvitationService,team.projectpulse.instructor.converter.InstructorToInstructorDtoConverter"
+                returns="void"/>
+        <Field name="userInvitationService" type="team.projectpulse.user.userinvitation.UserInvitationService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.section.SectionService"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.section.SectionRepository,team.projectpulse.rubric.RubricRepository,team.projectpulse.instructor.InstructorRepository,team.projectpulse.system.UserUtils,team.projectpulse.user.UserRepository,team.projectpulse.user.userinvitation.UserInvitationService"
+                returns="void"/>
+        <Field name="userInvitationService" type="team.projectpulse.user.userinvitation.UserInvitationService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.seed.DataInitializer"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.course.CourseRepository,team.projectpulse.instructor.InstructorRepository,team.projectpulse.evaluation.PeerEvaluationRepository,team.projectpulse.activity.ActivityRepository,org.springframework.security.crypto.password.PasswordEncoder,team.projectpulse.user.userinvitation.UserInvitationRepository,team.projectpulse.ram.requirement.RequirementArtifactService,team.projectpulse.ram.requirement.ArtifactLinkRepository,team.projectpulse.ram.usecase.UseCaseService,team.projectpulse.ram.document.template.DocumentTemplateRegistry,team.projectpulse.ram.document.DocumentRepository,team.projectpulse.ram.collaboration.CommentThreadRepository"
+                returns="void"/>
+        <Field name="requirementArtifactService" type="team.projectpulse.ram.requirement.RequirementArtifactService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.student.StudentController"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.student.StudentService,team.projectpulse.student.converter.StudentRegistrationToStudentConverter,team.projectpulse.student.converter.StudentToStudentDtoConverter,team.projectpulse.student.converter.StudentDtoToStudentConverter"
+                returns="void"/>
+        <Field name="studentService" type="team.projectpulse.student.StudentService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.student.StudentService"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.student.StudentRepository,team.projectpulse.section.SectionRepository,team.projectpulse.user.userinvitation.UserInvitationService,org.springframework.security.crypto.password.PasswordEncoder,team.projectpulse.system.UserUtils"
+                returns="void"/>
+        <Field name="userInvitationService" type="team.projectpulse.user.userinvitation.UserInvitationService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.team.TeamController"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.team.TeamService,team.projectpulse.team.converter.TeamToTeamDtoConverter,team.projectpulse.team.converter.TeamDtoToTeamConverter"
+                returns="void"/>
+        <Field name="teamService" type="team.projectpulse.team.TeamService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.user.UserController"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.user.resetpassword.ResetPasswordService,team.projectpulse.user.UserService"
+                returns="void"/>
+        <Field name="resetPasswordService" type="team.projectpulse.user.resetpassword.ResetPasswordService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.user.UserService"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.user.UserRepository,team.projectpulse.user.resetpassword.ResetPasswordService,org.springframework.security.crypto.password.PasswordEncoder"
+                returns="void"/>
+        <Field name="resetPasswordService" type="team.projectpulse.user.resetpassword.ResetPasswordService"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.user.resetpassword.ResetPasswordService"/>
+        <Method name="&lt;init&gt;"
+                params="team.projectpulse.user.resetpassword.ResetPasswordTokenRepository,team.projectpulse.system.EmailService,team.projectpulse.user.UserRepository"
+                returns="void"/>
+        <Field name="resetPasswordTokenRepository" type="team.projectpulse.user.resetpassword.ResetPasswordTokenRepository"/>
+    </Match>
+
+    <!-- D1: Live JPA collection getters preserve Project Pulse entity relationships and
+         ordered child collections. Course, Section, and Team helpers update inverse Instructor
+         collections, TeamService transfers update Section membership, and UseCaseService updates
+         association sets in place. Accept the reviewed live-collection API only at these getters;
+         Course.getCriteria(), PeerEvaluation.getRatings(), and collection setters remain enforced. -->
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.course.Course"/>
+        <Method name="getInstructors" params="" returns="java.util.Set"/>
+        <Field name="instructors" type="java.util.Set"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.course.Course"/>
+        <Method name="getRubrics" params="" returns="java.util.List"/>
+        <Field name="rubrics" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.course.Course"/>
+        <Method name="getSections" params="" returns="java.util.List"/>
+        <Field name="sections" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.instructor.Instructor"/>
+        <Method name="getCourses" params="" returns="java.util.Set"/>
+        <Field name="courses" type="java.util.Set"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.instructor.Instructor"/>
+        <Method name="getSections" params="" returns="java.util.Set"/>
+        <Field name="sections" type="java.util.Set"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.instructor.Instructor"/>
+        <Method name="getTeams" params="" returns="java.util.List"/>
+        <Field name="teams" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.ram.collaboration.CommentThread"/>
+        <Method name="getComments" params="" returns="java.util.List"/>
+        <Field name="comments" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.ram.document.DocumentSection"/>
+        <Method name="getCommentThreads" params="" returns="java.util.Set"/>
+        <Field name="commentThreads" type="java.util.Set"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.ram.document.DocumentSection"/>
+        <Method name="getRequirementArtifacts" params="" returns="java.util.List"/>
+        <Field name="requirementArtifacts" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.ram.document.RequirementDocument"/>
+        <Method name="getCommentThreads" params="" returns="java.util.Set"/>
+        <Field name="commentThreads" type="java.util.Set"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.ram.document.RequirementDocument"/>
+        <Method name="getSections" params="" returns="java.util.List"/>
+        <Field name="sections" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.ram.requirement.RequirementArtifact"/>
+        <Method name="getCommentThreads" params="" returns="java.util.Set"/>
+        <Field name="commentThreads" type="java.util.Set"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.ram.requirement.RequirementArtifact"/>
+        <Method name="getIncomingArtifactLinks" params="" returns="java.util.Set"/>
+        <Field name="incomingArtifactLinks" type="java.util.Set"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.ram.requirement.RequirementArtifact"/>
+        <Method name="getOutgoingArtifactLinks" params="" returns="java.util.Set"/>
+        <Field name="outgoingArtifactLinks" type="java.util.Set"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.ram.usecase.UseCase"/>
+        <Method name="getMainSteps" params="" returns="java.util.List"/>
+        <Field name="mainSteps" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.ram.usecase.UseCase"/>
+        <Method name="getPostconditions" params="" returns="java.util.Set"/>
+        <Field name="postconditions" type="java.util.Set"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.ram.usecase.UseCase"/>
+        <Method name="getPreconditions" params="" returns="java.util.Set"/>
+        <Field name="preconditions" type="java.util.Set"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.ram.usecase.UseCase"/>
+        <Method name="getSecondaryActors" params="" returns="java.util.Set"/>
+        <Field name="secondaryActors" type="java.util.Set"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.ram.usecase.UseCaseExtension"/>
+        <Method name="getSteps" params="" returns="java.util.List"/>
+        <Field name="steps" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.ram.usecase.UseCaseMainStep"/>
+        <Method name="getExtensions" params="" returns="java.util.List"/>
+        <Field name="extensions" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.rubric.Rubric"/>
+        <Method name="getCriteria" params="" returns="java.util.Set"/>
+        <Field name="criteria" type="java.util.Set"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.section.Section"/>
+        <Method name="getInstructors" params="" returns="java.util.Set"/>
+        <Field name="instructors" type="java.util.Set"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.section.Section"/>
+        <Method name="getStudents" params="" returns="java.util.List"/>
+        <Field name="students" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.section.Section"/>
+        <Method name="getTeams" params="" returns="java.util.List"/>
+        <Field name="teams" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.team.Team"/>
+        <Method name="getStudents" params="" returns="java.util.List"/>
+        <Field name="students" type="java.util.List"/>
+    </Match>
+
+    <!-- D1: Evaluation reports are intentionally mutable assembly models. EvaluationService
+         appends through WeeklyPeerEvaluationReport.getPeerEvaluationAverages() and clears private
+         comments with null for summaries. Preserve that report-building and filtering contract;
+         this exception does not apply to evaluation DTOs or persisted ratings. -->
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.evaluation.PeerEvaluationAverage"/>
+        <Method name="getPrivateComments" params="" returns="java.util.List"/>
+        <Field name="privateComments" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.evaluation.PeerEvaluationAverage"/>
+        <Method name="setPrivateComments" params="java.util.List" returns="void"/>
+        <Field name="privateComments" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.evaluation.PeerEvaluationAverage"/>
+        <Method name="getPublicComments" params="" returns="java.util.List"/>
+        <Field name="publicComments" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.evaluation.PeerEvaluationAverage"/>
+        <Method name="setPublicComments" params="java.util.List" returns="void"/>
+        <Field name="publicComments" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.evaluation.PeerEvaluationAverage"/>
+        <Method name="getRatingAverages" params="" returns="java.util.List"/>
+        <Field name="ratingAverages" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.evaluation.PeerEvaluationAverage"/>
+        <Method name="setRatingAverages" params="java.util.List" returns="void"/>
+        <Field name="ratingAverages" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.evaluation.WeeklyPeerEvaluationReport"/>
+        <Method name="getPeerEvaluationAverages" params="" returns="java.util.List"/>
+        <Field name="peerEvaluationAverages" type="java.util.List"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.evaluation.WeeklyPeerEvaluationReport"/>
+        <Method name="setPeerEvaluationAverages" params="java.util.List" returns="void"/>
+        <Field name="peerEvaluationAverages" type="java.util.List"/>
+    </Match>
+
+    <!-- D1: MyUserPrincipal intentionally wraps the repository-loaded user during login.
+         AuthService reads the Student or Instructor for login DTO conversion, and JwtProvider
+         reads its identity for the userId claim. These reviewed consumers do not mutate the user;
+         accept shared entity identity at this constructor and getter only. -->
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="team.projectpulse.user.MyUserPrincipal"/>
+        <Method name="getPeerEvaluationUser" params="" returns="team.projectpulse.user.PeerEvaluationUser"/>
+        <Field name="peerEvaluationUser" type="team.projectpulse.user.PeerEvaluationUser"/>
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="team.projectpulse.user.MyUserPrincipal"/>
+        <Method name="&lt;init&gt;" params="team.projectpulse.user.PeerEvaluationUser" returns="void"/>
+        <Field name="peerEvaluationUser" type="team.projectpulse.user.PeerEvaluationUser"/>
+    </Match>
 </FindBugsFilter>
