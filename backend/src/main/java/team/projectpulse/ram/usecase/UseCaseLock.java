@@ -37,10 +37,7 @@ public class UseCaseLock {
         if (lockedAt == null) {
             return false;
         }
-        if (expiresAt == null) {
-            return true;
-        }
-        return expiresAt.isAfter(now);
+        return expiresAt == null || expiresAt.isAfter(now);
     }
 
     public boolean isExpired(Instant now) {

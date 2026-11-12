@@ -4,7 +4,11 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Locale;
 
-public class RequirementDocumentSpecs {
+public final class RequirementDocumentSpecs {
+
+    private RequirementDocumentSpecs() {
+        // Static specification factories only.
+    }
 
     public static Specification<RequirementDocument> hasType(DocumentType providedType) {
         return (root, query, criteriaBuilder) ->
