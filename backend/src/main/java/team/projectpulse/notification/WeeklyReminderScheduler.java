@@ -82,7 +82,9 @@ public class WeeklyReminderScheduler {
 
                 Map<Student, List<SubmittableItem>> owedItems = this.submissionStatusService.findOwedItems(section.getSectionId(), itemsDueToday, week);
                 ReminderService.ReminderResult result = this.reminderService.remind(section, owedItems, week);
-                LOGGER.info("Sent {} of {} weekly reminders for section {}", result.sent(), owedItems.size(), sectionName);
+                if (LOGGER.isInfoEnabled()) {
+                    LOGGER.info("Sent {} of {} weekly reminders for section {}", result.sent(), owedItems.size(), sectionName);
+                }
             } catch (RuntimeException e) {
                 LOGGER.error("Could not send the weekly reminders for section {}", sectionName, e);
             }
