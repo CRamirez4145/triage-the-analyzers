@@ -34,8 +34,12 @@ public class UseCaseLock {
 
 
     public boolean isLocked(Instant now) {
-        if (lockedAt == null) return false;
-        if (expiresAt == null) return true;
+        if (lockedAt == null) {
+            return false;
+        }
+        if (expiresAt == null) {
+            return true;
+        }
         return expiresAt.isAfter(now);
     }
 

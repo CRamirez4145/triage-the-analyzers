@@ -130,8 +130,12 @@ public class Section {
     }
 
     public void addTeam(Team team) {
-        if (team == null) return;
-        if (!this.teams.contains(team)) this.teams.add(team);
+        if (team == null) {
+            return;
+        }
+        if (!this.teams.contains(team)) {
+            this.teams.add(team);
+        }
         team.setSection(this);
     }
 
@@ -144,8 +148,12 @@ public class Section {
     }
 
     public void addStudent(Student student) {
-        if (student == null) return;
-        if (!this.students.contains(student)) this.students.add(student);
+        if (student == null) {
+            return;
+        }
+        if (!this.students.contains(student)) {
+            this.students.add(student);
+        }
         student.setSection(this);
     }
 
