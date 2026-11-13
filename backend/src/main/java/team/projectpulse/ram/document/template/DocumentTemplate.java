@@ -19,11 +19,16 @@ public class DocumentTemplate {
     }
 
     public List<SectionTemplate> getSections() {
-        return sections;
+        List<SectionTemplate> result = sections;
+        if (result != null) {
+            result = new ArrayList<>(result);
+        }
+        return result;
     }
 
     public void setSections(List<SectionTemplate> sections) {
-        this.sections = sections;
+        // Keep YAML section order and shared section objects, but own list membership.
+        this.sections = sections == null ? null : new ArrayList<>(sections);
     }
 
     public static class SectionTemplate {

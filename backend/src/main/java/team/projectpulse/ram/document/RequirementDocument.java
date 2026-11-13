@@ -10,6 +10,7 @@ import team.projectpulse.team.Team;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -52,18 +53,20 @@ public class RequirementDocument {
     private Instant updatedAt;
 
 
-    public RequirementDocument() {
-    }
 
     public void addSection(DocumentSection section) {
-        if (section == null) return;
+        if (section == null) {
+            return;
+        }
 
         this.sections.add(section);
         section.setDocument(this);
     }
 
     public void removeSection(DocumentSection section) {
-        if (section == null) return;
+        if (section == null) {
+            return;
+        }
 
         this.sections.remove(section);
         if (section.getDocument() == this) {
@@ -72,14 +75,18 @@ public class RequirementDocument {
     }
 
     public void addCommentThread(CommentThread thread) {
-        if (thread == null) return;
+        if (thread == null) {
+            return;
+        }
 
         this.commentThreads.add(thread);
         thread.setDocument(this);
     }
 
     public void removeCommentThread(CommentThread thread) {
-        if (thread == null) return;
+        if (thread == null) {
+            return;
+        }
 
         this.commentThreads.remove(thread);
         if (thread.getDocument() == this) {
@@ -132,7 +139,7 @@ public class RequirementDocument {
     }
 
     public void setSections(List<DocumentSection> sections) {
-        this.sections = sections;
+        this.sections = sections == null ? null : new ArrayList<>(sections);
     }
 
     public DocumentStatus getStatus() {
@@ -148,7 +155,7 @@ public class RequirementDocument {
     }
 
     public void setCommentThreads(Set<CommentThread> commentThreads) {
-        this.commentThreads = commentThreads;
+        this.commentThreads = commentThreads == null ? null : new LinkedHashSet<>(commentThreads);
     }
 
     public Integer getVersion() {

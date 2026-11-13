@@ -12,6 +12,7 @@ import team.projectpulse.user.PeerEvaluationUser;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -69,8 +70,6 @@ public class DocumentSection {
     private PeerEvaluationUser updatedBy;
 
 
-    public DocumentSection() {
-    }
 
     /* ---------- Convenience helpers ---------- */
     public void addRequirementArtifact(RequirementArtifact artifact) {
@@ -98,13 +97,17 @@ public class DocumentSection {
     }
 
     public void addCommentThread(CommentThread thread) {
-        if (thread == null) return;
+        if (thread == null) {
+            return;
+        }
         this.commentThreads.add(thread);
         thread.setDocumentSection(this);
     }
 
     public void removeCommentThread(CommentThread thread) {
-        if (thread == null) return;
+        if (thread == null) {
+            return;
+        }
         this.commentThreads.remove(thread);
         if (thread.getDocumentSection() == this) {
             thread.setDocumentSection(null);
@@ -171,7 +174,7 @@ public class DocumentSection {
     }
 
     public void setRequirementArtifacts(List<RequirementArtifact> requirementArtifacts) {
-        this.requirementArtifacts = requirementArtifacts;
+        this.requirementArtifacts = requirementArtifacts == null ? null : new ArrayList<>(requirementArtifacts);
     }
 
     public String getGuidance() {
@@ -187,7 +190,7 @@ public class DocumentSection {
     }
 
     public void setCommentThreads(Set<CommentThread> commentThreads) {
-        this.commentThreads = commentThreads;
+        this.commentThreads = commentThreads == null ? null : new LinkedHashSet<>(commentThreads);
     }
 
     public DocumentSectionLock getLock() {

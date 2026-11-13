@@ -15,6 +15,7 @@ public class UserInvitation {
 
 
     public UserInvitation() {
+        // Required by JPA to instantiate the entity before populating persistent state.
     }
 
     public UserInvitation(String email, Integer courseId, Integer sectionId, String token, String role) {

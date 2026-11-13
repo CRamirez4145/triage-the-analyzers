@@ -7,6 +7,7 @@ public class RatingAverage {
 
 
     public RatingAverage() {
+        // Retained for compatibility with no-argument bean construction and setter population.
     }
 
     public RatingAverage(Integer criterionId, Double averageScore) {

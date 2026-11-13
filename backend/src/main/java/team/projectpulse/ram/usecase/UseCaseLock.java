@@ -32,13 +32,12 @@ public class UseCaseLock {
     private Integer version;
 
 
-    public UseCaseLock() {
-    }
 
     public boolean isLocked(Instant now) {
-        if (lockedAt == null) return false;
-        if (expiresAt == null) return true;
-        return expiresAt.isAfter(now);
+        if (lockedAt == null) {
+            return false;
+        }
+        return expiresAt == null || expiresAt.isAfter(now);
     }
 
     public boolean isExpired(Instant now) {

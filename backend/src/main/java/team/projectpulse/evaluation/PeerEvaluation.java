@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -36,6 +37,7 @@ public class PeerEvaluation {
 
 
     public PeerEvaluation() {
+        // Required by JPA to instantiate the entity before populating persistent state.
     }
 
     public PeerEvaluation(String week, Student evaluator, Student evaluatee, List<Rating> ratings, String publicComment, String privateComment) {
@@ -80,11 +82,22 @@ public class PeerEvaluation {
     }
 
     public List<Rating> getRatings() {
-        return ratings;
+        List<Rating> result = ratings;
+        if (result != null) {
+            result = Collections.unmodifiableList(result);
+        }
+        return result;
     }
 
+    /**
+     * Replaces ratings with a shallow copy, retaining the current state if copying fails.
+     *
+     * @param ratings the non-null list whose membership will be copied
+     * @throws NullPointerException if ratings is null
+     */
     public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
+        List<Rating> replacement = new ArrayList<>(ratings);
+        this.ratings = replacement;
         this.ratings.forEach(rating -> rating.setPeerEvaluation(this));
         calculateTotalScore(); // calculate total score when ratings are set
     }

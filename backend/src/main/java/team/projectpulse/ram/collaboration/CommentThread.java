@@ -59,8 +59,6 @@ public class CommentThread {
     private PeerEvaluationUser updatedBy;
 
 
-    public CommentThread() {
-    }
 
     public void addComment(Comment comment) {
         comment.setCommentThread(this);
@@ -137,7 +135,7 @@ public class CommentThread {
     }
 
     public void setComments(List<Comment> comments) {
-        this.comments = comments;
+        this.comments = comments == null ? null : new ArrayList<>(comments);
     }
 
     public Instant getCreatedAt() {

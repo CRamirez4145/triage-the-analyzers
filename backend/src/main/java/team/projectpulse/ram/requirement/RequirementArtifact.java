@@ -13,6 +13,7 @@ import team.projectpulse.user.PeerEvaluationUser;
 
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -78,7 +79,7 @@ public class RequirementArtifact {
 
 
     public RequirementArtifact() {
-
+        // Required by JPA to instantiate the entity before populating persistent state.
     }
 
     public RequirementArtifact(Team team, RequirementArtifactType type, String title, String content, String notes) {
@@ -110,13 +111,17 @@ public class RequirementArtifact {
     }
 
     public void addCommentThread(CommentThread thread) {
-        if (thread == null) return;
+        if (thread == null) {
+            return;
+        }
         this.commentThreads.add(thread);
         thread.setArtifact(this);
     }
 
     public void removeCommentThread(CommentThread thread) {
-        if (thread == null) return;
+        if (thread == null) {
+            return;
+        }
         this.commentThreads.remove(thread);
         if (thread.getArtifact() == this) {
             thread.setArtifact(null);
@@ -200,7 +205,7 @@ public class RequirementArtifact {
     }
 
     public void setOutgoingArtifactLinks(Set<ArtifactLink> outgoingArtifactLinks) {
-        this.outgoingArtifactLinks = outgoingArtifactLinks;
+        this.outgoingArtifactLinks = outgoingArtifactLinks == null ? null : new LinkedHashSet<>(outgoingArtifactLinks);
     }
 
     public Set<ArtifactLink> getIncomingArtifactLinks() {
@@ -208,7 +213,7 @@ public class RequirementArtifact {
     }
 
     public void setIncomingArtifactLinks(Set<ArtifactLink> incomingArtifactLinks) {
-        this.incomingArtifactLinks = incomingArtifactLinks;
+        this.incomingArtifactLinks = incomingArtifactLinks == null ? null : new LinkedHashSet<>(incomingArtifactLinks);
     }
 
     public Set<CommentThread> getCommentThreads() {
@@ -216,7 +221,7 @@ public class RequirementArtifact {
     }
 
     public void setCommentThreads(Set<CommentThread> commentThreads) {
-        this.commentThreads = commentThreads;
+        this.commentThreads = commentThreads == null ? null : new LinkedHashSet<>(commentThreads);
     }
 
     public PeerEvaluationUser getCreatedBy() {

@@ -25,6 +25,7 @@ public class Rubric {
 
 
     public Rubric() {
+        // Required by JPA to instantiate the entity before populating persistent state.
     }
 
     public Rubric(String rubricName) {

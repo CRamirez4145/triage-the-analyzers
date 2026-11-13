@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public record SectionDto(Integer sectionId,
@@ -29,4 +30,18 @@ public record SectionDto(Integer sectionId,
                          DayOfWeek peerEvaluationWeeklyDueDay,
                          @NotEmpty(message = "Peer evaluation due time is required.")
                          String peerEvaluationDueTime) {
+
+    // Own collection membership while preserving nulls, encounter order, and element identity.
+    public SectionDto {
+        activeWeeks = activeWeeks == null ? null : new ArrayList<>(activeWeeks);
+    }
+
+    @Override
+    public List<String> activeWeeks() {
+        List<String> result = activeWeeks;
+        if (result != null) {
+            result = new ArrayList<>(result);
+        }
+        return result;
+    }
 }

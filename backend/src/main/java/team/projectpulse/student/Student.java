@@ -15,6 +15,7 @@ public class Student extends PeerEvaluationUser {
 
 
     public Student() {
+        // Required by JPA to instantiate the entity before populating persistent state.
     }
 
     public Student(String username, String firstName, String lastName, String email, String password, boolean enabled, String roles) {

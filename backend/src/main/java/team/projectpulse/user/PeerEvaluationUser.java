@@ -34,6 +34,7 @@ public abstract class PeerEvaluationUser {
 
 
     public PeerEvaluationUser() {
+        // Required for JPA entity construction through concrete user subclasses.
     }
 
     public PeerEvaluationUser(String username, String firstName, String lastName, String email, String password, boolean enabled, String roles) {

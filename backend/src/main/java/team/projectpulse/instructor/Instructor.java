@@ -11,6 +11,7 @@ import jakarta.persistence.OneToMany;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +31,7 @@ public class Instructor extends PeerEvaluationUser {
 
 
     public Instructor() {
+        // Required by JPA to instantiate the entity before populating persistent state.
     }
 
     public Instructor(String username, String firstName, String lastName, String email, String password, boolean enabled, String roles) {
@@ -41,7 +43,7 @@ public class Instructor extends PeerEvaluationUser {
     }
 
     public void setTeams(List<Team> teams) {
-        this.teams = teams;
+        this.teams = teams == null ? null : new ArrayList<>(teams);
     }
 
     public Set<Section> getSections() {
@@ -49,7 +51,7 @@ public class Instructor extends PeerEvaluationUser {
     }
 
     public void setSections(Set<Section> sections) {
-        this.sections = sections;
+        this.sections = sections == null ? null : new LinkedHashSet<>(sections);
     }
 
     public Set<Course> getCourses() {
@@ -57,7 +59,7 @@ public class Instructor extends PeerEvaluationUser {
     }
 
     public void setCourses(Set<Course> courses) {
-        this.courses = courses;
+        this.courses = courses == null ? null : new LinkedHashSet<>(courses);
     }
 
     public Section getDefaultSection() {
